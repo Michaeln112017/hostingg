@@ -55,6 +55,12 @@
             maxZoom: 18
         });
 
+        var google = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+                + 'contributors',
+            maxZoom: 18
+        });
+
 
         function getColorPaises(d) {
 
@@ -121,7 +127,10 @@
             })
         }
 
-
+        var baseMaps = {
+            "OpenStreetMap": OSM,
+            "Google": google
+        };
 
 
 
@@ -132,6 +141,10 @@
             layers: [OSM, ciudades],
             zoom: 4,
         });
+        L.control.scale()
+            .addTo(map);
+
+        L.control.layers(baseMaps).addTo(map);
 
         L.geoJson(countries, { style: stylePaises }).addTo(map);
         L.geoJson(ciudades, {
